@@ -7,6 +7,9 @@ import Hero from './Hero';
 import Faq from './Faq';
 import TestimonialSlider from './TestimonialSlider';
 import Footer from './Footer';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
+
 
 function App() {
   
@@ -100,6 +103,20 @@ function App() {
 
   return (
     <div className="App">
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       <header className="site-header">
         <div className="container header-content">
           <div className="brand">
