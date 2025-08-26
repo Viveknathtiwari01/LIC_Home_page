@@ -102,6 +102,74 @@ const Hero = () => {
 
 // Inside your Hero.js file, replace the entire handleSubmit function
 
+// const handleSubmit = (e) => {
+//   e.preventDefault();
+
+//   const newErrors = {
+//     firstName: validateName(formData.firstName),
+//     lastName: validateName(formData.lastName),
+//     phone: validatePhone(),
+//     propertyLocation: validateSelect(formData.propertyLocation, "Property Location"),
+//     preferredOffice: validateSelect(formData.preferredOffice, "Preferred Office"),
+//     terms: validateTerms(formData.terms),
+//   };
+
+//   setErrors(newErrors);
+//   setTouched({
+//     firstName: true,
+//     lastName: true,
+//     phone: true,
+//     propertyLocation: true,
+//     preferredOffice: true,
+//     terms: true,
+//   });
+
+//   const isFormValid = Object.values(newErrors).every((error) => error === "");
+
+//   if (isFormValid) {
+//     const scriptURL = "https://script.google.com/macros/s/AKfycbx4jGP0hxuB_45jE2d1R8mDt2KXlK8kXJhRMVJcgtwD-mh9BisCk74P4qpTc7290c7fEw/exec";
+    
+//     const data = new FormData();
+//     data.append('firstName', formData.firstName);
+//     data.append('lastName', formData.lastName);
+//     data.append('phone', formData.phone);
+//     data.append('propertyLocation', formData.propertyLocation);
+//     data.append('preferredOffice', formData.preferredOffice);
+//     data.append('terms', formData.terms);
+
+//     const submissionPromise = fetch(scriptURL, {
+//       method: 'POST',
+//       body: data,
+//       mode: 'no-cors' // This mode bypasses the preflight check
+//     });
+
+//     // Use toast.promise to automatically handle loading, success, and error states
+//     toast.promise(
+//       submissionPromise,
+//       {
+//         pending: 'Submitting your form...',
+//         success: 'Thank you! Your form has been submitted successfully.',
+//         error: 'There was an error submitting your form. Please try again.'
+//       }
+//     )
+//     .then(() => {
+//       // This block runs after the submission is successful.
+//       // Reset the form state and key to clear the fields.
+//       setFormData({
+//         firstName: '', lastName: '', phone: '',
+//         propertyLocation: '', preferredOffice: '', terms: false
+//       });
+//       setErrors({});
+//       setTouched({});
+//       setFormKey(Date.now());
+//     })
+//     .catch(error => {
+//       // The error toast will be shown automatically by toast.promise
+//       console.error("Error!", error.message);
+//     });
+//   }
+// };
+
 const handleSubmit = (e) => {
   e.preventDefault();
 
@@ -140,10 +208,9 @@ const handleSubmit = (e) => {
     const submissionPromise = fetch(scriptURL, {
       method: 'POST',
       body: data,
-      mode: 'no-cors' // This mode bypasses the preflight check
+      mode: 'no-cors'
     });
 
-    // Use toast.promise to automatically handle loading, success, and error states
     toast.promise(
       submissionPromise,
       {
@@ -153,7 +220,42 @@ const handleSubmit = (e) => {
       }
     )
     .then(() => {
-      // This block runs after the submission is successful.
+      // ===== SEND WHATSAPP MESSAGE AFTER SUCCESSFUL SUBMISSION =====
+      
+      const accessToken = "REPJWL1O5XWuVvH4YDXV5VU5ERVJTQ09SRQagoScR5ZhsAxyE7aNQXpmwYEzr1duBm065tNJuYoSQ4yFbYLDXcVU5ERVJTQ09SRQBPFx0vJHREFTSALYXmVKVU5ERVJTQ09SRQhRVU5ERVJTQ09SRQNZ6fRojZR8yNREFTSAi6SDPqb7eAEsrIpN0";
+      const apiUrl = "https://crmapi.karvatech.com/api/meta/v19.0/567718153091691/messages";
+      
+      // The phone number from the form, digits only
+      const userPhoneNumber = formData.phone.replace(/\D/g, ''); 
+
+      const whatsappData = {
+        to: userPhoneNumber,
+        recipient_type: "individual",
+        type: "template",
+        template: {
+          language: {
+            policy: "deterministic",
+            code: "en"
+          },
+          name: "reminder_tempate_lic",
+          components: []
+        }
+      };
+
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify(whatsappData)
+      })
+      .then(response => response.json())
+      .then(data => console.log('WhatsApp message sent:', data))
+      .catch(error => console.error('Error sending WhatsApp message:', error));
+
+      // =============================================================
+
       // Reset the form state and key to clear the fields.
       setFormData({
         firstName: '', lastName: '', phone: '',
@@ -164,12 +266,10 @@ const handleSubmit = (e) => {
       setFormKey(Date.now());
     })
     .catch(error => {
-      // The error toast will be shown automatically by toast.promise
       console.error("Error!", error.message);
     });
   }
 };
-
   // --- SIDE EFFECTS (API Calls & Plugin Initialization) ---
 
   useEffect(() => {
