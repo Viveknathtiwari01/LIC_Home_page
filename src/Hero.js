@@ -195,7 +195,7 @@ const handleSubmit = (e) => {
   const isFormValid = Object.values(newErrors).every((error) => error === "");
 
   if (isFormValid) {
-    const scriptURL = "https://script.google.com/macros/s/AKfycbx4jGP0hxuB_45jE2d1R8mDt2KXlK8kXJhRMVJcgtwD-mh9BisCk74P4qpTc7290c7fEw/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzGV3UPfUXiJjHxzoaYWi-7Ipj5K60w9U1LIbanEqwBojqtpCXSxTxiElRf2uoXVIMG/exec";
     
     const data = new FormData();
     data.append('firstName', formData.firstName);
