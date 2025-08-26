@@ -22,17 +22,72 @@ a { color:var(--primary); text-decoration:none; }
 .btn-secondary { background:var(--secondary); color:#1d1d1f; }
 
 /* Header */
-.site-header { top:0; z-index:20; background:var(--white); border-bottom:1px solid #e5e7eb; }
-.header-content { display:flex; align-items:center; justify-content:space-between; padding:2px 0; min-height:60px; }
-.brand { display:flex; align-items:center; flex:1; }
-.brand-logo { width:120px; height:80px; object-fit:contain; }
-.header-actions { display:flex; align-items:center; justify-content:flex-end; }
-.toll-free-btn { background:#0b2c5a; color:var(--white); border:none; border-radius:8px; padding:10px 16px; font-weight:600; cursor:pointer; }
-.toll-free-btn:hover { background:#0a459f; }
+.site-header { 
+  position: sticky; /* Keeps the header at the top when scrolling */
+  top: 0; 
+  z-index: 20; 
+  background: var(--white); 
+  border-bottom: 1px solid #e5e7eb; 
+}
 
-/* ==========================================================================
-   1. HERO SECTION & LAYOUT
-   ========================================================================== */
+.header-content { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 0 20px; /* Use padding on the container for spacing */
+  height: 60px; /* Set a fixed height for the header */
+}
+
+/* 1. The brand container is now a positioning anchor */
+.brand { 
+  position: relative;
+  display: flex; 
+  align-items: center; 
+  width: 150px; /* Set a width to hold the logo's space */
+  height: 100%; /* Take up the full height of the header */
+}
+
+/* 2. The logo is positioned absolutely within the brand container */
+.brand-logo { 
+  position: absolute;
+  top: 50%;
+  left: 0; /* Align to the start of the brand container */
+  transform: translateY(-60%); /* Vertically center it */
+
+  /* 3. Now you can make it larger without affecting the header */
+  width: 150px; 
+  height: 110px; 
+  object-fit: contain; 
+}
+
+.header-actions { 
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-end; 
+}
+
+.toll-free-btn { 
+  background: #00529c; 
+  color: var(--white); 
+  border: none; 
+  font-size: 16px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 8px; 
+  padding: 10px 16px; 
+  font-weight: 600; 
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  transform: translateY(-20%); /* Vertically center it */
+}
+
+.toll-free-btn:hover { 
+  background: #0a459f; 
+}
+
+/*
+   HERO SECTION & LAYOUT 
+
+*/
 
 .hero {
   /* The change is in the 'background' shorthand property below */
@@ -71,7 +126,7 @@ a { color:var(--primary); text-decoration:none; }
 }
 
 /* ==========================================================================
-   2. HERO CONTENT (TEXT & HEADINGS)
+  HERO CONTENT (TEXT & HEADINGS)
    ========================================================================== */
 
 .hero-text-container {
@@ -523,7 +578,7 @@ button[type="submit"]:hover {
 /* Responsive Separator Section */
 @media (max-width: 920px) {
   .separator-section {
-    padding: 40px 0;
+    padding: 40px 0 0;
     min-height: 150px;
   }
   
@@ -539,7 +594,6 @@ button[type="submit"]:hover {
   
   .separator-image {
     margin-left: 0;
-    order: -1; /* Show image first on mobile */
   }
   
   .separator-image img {
@@ -550,7 +604,7 @@ button[type="submit"]:hover {
 
 @media (max-width: 480px) {
   .separator-section {
-    padding: 30px 0;
+    padding: 30px 0 0;
     min-height: 120px;
   }
   

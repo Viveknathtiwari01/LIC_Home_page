@@ -395,7 +395,7 @@ const handleSubmit = (e) => {
         <div className="hero-form">
           <div className="card">
             <header>
-              <h3>Get a Quick Quote!</h3>
+              <h3>Registration & Login Page</h3>
             </header>
             <form id="regForm" key={formKey} onSubmit={handleSubmit} noValidate>
               <div className="field">
@@ -448,6 +448,7 @@ const handleSubmit = (e) => {
                   id="phone"
                   name="phone"
                   type="tel"
+                  placeholder="Phone Number"
                   onChange={handleInputChange}
                   onBlur={handleFieldBlur}
                   className={
